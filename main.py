@@ -21,6 +21,10 @@ def main():
     path = os.path.join(out_dir, "entry.txt")
     with open(path, "w", encoding="utf-8", newline="") as f:
         f.write(text)
+    # Read back what landed on disk: a silent short write must fail loudly.
+    with open(path, "r", encoding="utf-8", newline="") as f:
+        written = f.read()
+    assert written == text, "entry.txt on disk does not match the entry line"
 
 
 if __name__ == "__main__":
